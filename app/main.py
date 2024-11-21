@@ -1,9 +1,10 @@
 from logic import Library
 from book import Status
-import utils
+from utils import library_menu, search_books_menu
 
 
 def main():
+    """Основная функция программы. Отображает меню и обрабатывает выбор пользователя."""
     library = Library()
 
     print(
@@ -11,7 +12,7 @@ def main():
     )
 
     while True:
-        print(utils.library_menu)
+        print(library_menu)
         choice = input("Выберите действие: ")
         print("")
         match choice:
@@ -40,7 +41,7 @@ def main():
                 library.delete_book(id)
 
             case "3":  # Найти книгу
-                pass
+                search_books_menu(library)
             case "4":  # Показать все книги
                 library.list_books()
             case "5":  # Изменить статус книги
