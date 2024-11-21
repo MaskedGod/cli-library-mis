@@ -24,17 +24,12 @@ class Book:
             "title": self.title,
             "author": self.author,
             "year": self.year,
-            "status": self.status,
+            "status": self.status.value,
         }
 
-    def borrow_book(self) -> None:
-        if self.status == Status.AVAILABLE:
-            self.status = Status.BORROWED
-        else:
-            print("Ошибка! Книга уже выдана другому клиенту.")
-
-    def return_book(self) -> None:
-        if self.status == Status.BORROWED:
-            self.status = Status.AVAILABLE
-        else:
-            print("Ошибка! Книга уже возвращена.")
+    @staticmethod
+    def from_dict(data) -> "Book":
+        book = Book(data["title"], data["author"], data["year"])
+        book.status = data["status"]
+        book.id = int(data["id"])
+        return book
