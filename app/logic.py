@@ -50,7 +50,7 @@ class Library:
         new_book = Book(title, author, year)
         self.books.append(new_book)
         self.save_books()
-        print(f"{new_book.title} добавлена")
+        print(f"'{new_book.title}' добавлена")
 
     def delete_book(self, id) -> None:
         """Удаляет книгу по ее идентификатору.
@@ -73,7 +73,7 @@ class Library:
             id (int): Уникальный идентификатор книги.
             status (Status): Новый статус книги.
         """
-        book_to_update = next(book for book in self.books if book.id == id)
+        book_to_update = next((book for book in self.books if book.id == id), None)
         if book_to_update:
             if book_to_update.status == status:
                 print(f"Статус книги {book_to_update.status.value} уже установлен ")
