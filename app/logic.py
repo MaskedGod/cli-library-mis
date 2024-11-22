@@ -47,10 +47,13 @@ class Library:
             author (str): Автор книги.
             year (int): Год издания книги.
         """
-        new_book = Book(title, author, year)
-        self.books.append(new_book)
-        self.save_books()
-        print(f"'{new_book.title}' добавлена")
+        if title and author and year:
+            new_book = Book(title, author, year)
+            self.books.append(new_book)
+            self.save_books()
+            print(f"'{new_book.title}' добавлена")
+        else:
+            print("Ошибка: Книга не может быть добавлена с пустыми данными")
 
     def delete_book(self, id) -> None:
         """Удаляет книгу по ее идентификатору.
@@ -58,13 +61,13 @@ class Library:
         Args:
             id (int): Уникальный идентификатор книги.
         """
-        deleted_book = next(book for book in self.books if book.id == id)
+        deleted_book = next((book for book in self.books if book.id == id), None)
         if deleted_book:
             self.books = [book for book in self.books if book.id != id]
             self.save_books()
-            print(f"{deleted_book.title} удалена")
+            print(f"'{deleted_book.title}' удалена")
         else:
-            print("Книги под этим id не существует")
+            print("Книга с id {id} не найдена.")
 
     def change_book_status(self, id, status: Status) -> None:
         """Изменяет статус книги по ее идентификатору.
@@ -112,7 +115,10 @@ class Library:
             title (str): Название книги для поиска.
         """
         query = [book for book in self.books if book.title.lower() == title.lower()]
-        self.print_books(query)
+        if query:
+            self.print_books(query)
+        else:
+            print("Книги не найдены")
 
     def search_by_author(self, author) -> None:
         """Ищет книги по автору и выводит результат.
@@ -121,7 +127,10 @@ class Library:
             author (str): Имя автора для поиска.
         """
         query = [book for book in self.books if book.author.lower() == author.lower()]
-        self.print_books(query)
+        if query:
+            self.print_books(query)
+        else:
+            print("Книги не найдены")
 
     def search_by_year(self, year) -> None:
         """Ищет книги по году издания и выводит результат.
@@ -130,4 +139,7 @@ class Library:
             year (int): Год издания для поиска.
         """
         query = [book for book in self.books if book.year == year]
-        self.print_books(query)
+        if query:
+            self.print_books(query)
+        else:
+            print("Книги не найдены")
